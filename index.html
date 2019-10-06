@@ -19,42 +19,89 @@
 </head>
 
 <body>
-    <div id="navbar"></div>
     <div class="wrapper">
-        <div class="col-4">
-            <table class="table table-striped" id="countShirts">
-                <thead>
-                    <tr>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
-                </tbody>
-            /table>
+        <div class="row">
+            <div class="col-3 table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-striped" id="alergiesList">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th>Alergies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3 table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-striped" id="gdprList">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th>Name</th>
+                            <th>GDPR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3 table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-striped" id="shirtsList">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th>Size</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
+        <div class="row">
+            <div class="col-3 table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-striped" id="acceptedList">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3 table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-striped" id="pendentList">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3 table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-striped" id="declinedList">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div id="contact-us"></div>
     <!-- Scripts -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
@@ -63,6 +110,7 @@
     <!-- Custom Scripts -->
     <script type="text/javascript" src="js/firebaseInit.js"></script>
     <script type="text/javascript" src="js/users.js"></script>
+    <link rel="stylesheet" href="css/main.css">
 </body>
 
 </html>
