@@ -1,5 +1,3 @@
-$(document).ready(userStats());
-
 function userStats() {
     var db = firebase.firestore();
     db.collection("hackeps-2019/prod/users").get().then(querySnapshot => {
@@ -26,10 +24,11 @@ function countShirts(users) {
     shirts.forEach(function(value, key) {
         $("#shirtsList tbody").append(
             `<tr>
-                <th scope=${count}>1</th>
+                <th scope=${count}>${count}</th>
                 <td>${key}</td>
                 <td>${value}</td>
             </tr>`);
+        count++;
     });
 }
 
@@ -39,12 +38,11 @@ function acceptedUserStatus(users) {
     var deniedUsers = [];
     var countAccepted = 0;
     var countPendent = 0;
-    var countDenied = 0;
     users.forEach(user => {
         if(user.accepted === "PENDENT") {
             $("#pendentList tbody").append(
                 `<tr>
-                    <th scope=${countPendent}>1</th>
+                    <th scope=${countPendent}>${countPendent}</th>
                     <td>${user.fullName}</td>
                     <td>${user.accepted}</td>
                 </tr>`);
@@ -53,7 +51,7 @@ function acceptedUserStatus(users) {
         } else if (user.accepted === "ACCEPTED") {
             $("#acceptedList tbody").append(
                 `<tr>
-                    <th scope=${countAccepted}>1</th>
+                    <th scope=${countAccepted}>${countAccepted}</th>
                     <td>${user.fullName}</td>
                     <td>${user.accepted}</td>
                 </tr>`);
@@ -62,7 +60,7 @@ function acceptedUserStatus(users) {
         } else {
             $("#declinedList tbody").append(
                 `<tr>
-                    <th scope=${countDenied}>1</th>
+                    <th scope=${countDenied}>${countDenied}</th>
                     <td>${user.fullName}</td>
                     <td>${user.accepted}</td>
                 </tr>`);
@@ -70,6 +68,11 @@ function acceptedUserStatus(users) {
             //deniedUsers.push({"name" : user.fullName, "status": "DENIED"})
         }
     });
+    $("#totalList tbody").append(
+        `<tr>
+            <th scope="">1</th>
+            <td>${users.length}</td>
+        </tr>`);
 }
 
 function gdprStatus(users) {
@@ -78,7 +81,7 @@ function gdprStatus(users) {
     users.forEach(user => {
         $("#gdprList tbody").append(
             `<tr>
-                <th scope=${count}>1</th>
+                <th scope=${count}>${count}</th>
                 <td>${user.fullName}</td>
                 <td>${user.gdpr}</td>
             </tr>`);
@@ -92,7 +95,7 @@ function getAlergies(users) {
         if(user.food) {
             $("#alergiesList tbody").append(
                 `<tr>
-                    <th scope=${count}>1</th>
+                    <th scope=${count}>${count}</th>
                     <td>${user.food}</td>
                 </tr>`);
             count++;
