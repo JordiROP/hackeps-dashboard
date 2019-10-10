@@ -1,25 +1,33 @@
-function teamStats() {
+async function getTeamUsers(team) {
     var db = firebase.firestore();
-    db.collection("hackeps-2019/prod/teams").get().then(querySnapshot => {
-        var teams = querySnapshot.docs.map(doc => doc.data());
-        showTeams(teams);
-    });
-    
+    const usersPromises = team.members.map(u => db.doc('hackeps-2019/prod/' + u.path).get());
+    const users = await Promise.all(usersPromises);
+
+    return users.map(u => u.data());
 }
 
-function showTeams(teams) {
+async function teamStats() {
+    var db = firebase.firestore();
+    const teamsSnapshot = await db.collection("hackeps-2019/prod/teams").get();
+    const teams = teamsSnapshot.docs.map(doc => doc.data());
+    showTeams(teams);
+}
+
+async function showTeams(teams) {
     var count = 0;
     var membersWTeam = 0;
-    teams.forEach(team => {
+    for (const team of teams) {
+        const members = await getTeamUsers(team);
         $("#teamsList tbody").append(
             `<tr>
                 <th scope=${count}>${count}</th>
                 <td>${team.name}</td>
+                <td>${members.map(m => m.nickname).join(", ")}</td>
                 <td>${team.members.length}/4</td>
             </tr>`);
         count++;
         membersWTeam += team.members.length;
-    });
+    }
 
     $("#teamsMiscList tbody").append(
         `<tr>
