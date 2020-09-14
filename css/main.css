@@ -1,8 +1,17 @@
-.my-custom-scrollbar {
-    position: relative;
-    height: 300px;
-    overflow: auto;
+* {
+    color:  white;
+ }
+
+body {
+    background-color: #262626;
+    padding-top: 40px;
 }
-.table-wrapper-scroll-y {
-    display: block;
+
+#main {
+    padding-top: 20px;
+}
+
+.navbar-cstm {
+    box-shadow: 4px 4px 10px 4px #1a1a1a !important;
+    background-color: #333333!important;
 }

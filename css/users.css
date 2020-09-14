@@ -1,0 +1,40 @@
+.ok-btn {
+    margin: 0;
+    padding: 0.1875rem;
+    background-color: #37612c;
+}
+
+.ko-btn {
+    margin: 0;
+    padding: 0.1875rem;
+    background-color: #7b1e1e;
+}
+
+.card-box {
+    background-color: #4d4d4d !important;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.allergies-scrollbar {
+    height: 9.37rem;
+    position: relative;
+    overflow: auto;
+}
+
+#allergies-list.table.table td, #allergies-list.table.table th {
+    padding-top: 0.5rem!important;
+    padding-bottom: 0.5rem!important;
+}
+
+#allergies-list.table td, #allergies-list.table th {
+    padding: 0.5rem!important;
+}

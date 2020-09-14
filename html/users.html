@@ -1,48 +1,17 @@
 <div class="row">
-        <div class="col-12 mt-5">
-            <h1 style="text-align: center">Users</h1>
-        </div>
-    </div>
-    <div class="row mt-5">
-        <div class="offset-1 col-3">
-            <p style="text-align: center">Accepted</p>
-            <div class = "table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table table-striped" id="acceptedList">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-3">
-            <p style="text-align: center">Pendent</p>
-            <div class = "table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table table-striped" id="pendentList">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-3 table-wrapper-scroll-y my-custom-scrollbar">
-            <p style="text-align: center">Declined</p>
-            <table class="table table-striped" id="declinedList">
+    <div class="col">
+        <p style="text-align: center">Users</p>
+        <div class = "table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-striped" id="usersList">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">id</th>
                         <th>Name</th>
+                        <th>Birthday</th>
+                        <th>Allergies</th>
+                        <th>Shirt Size</th>
+                        <th>GDPR</th>
+                        <th>Terms</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -50,67 +19,84 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-1">
-            <p style="text-align: center">Total</p>
-            <table class="table table-striped" id="totalList">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th>Total </th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
     </div>
-    <div class="row mt-5" >
-        <div class="offset-2 col-2">
-            <p style="text-align: center">Alergies</p>
-            <div class = "table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table table-striped" id="alergiesList">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th>Alergies</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+</div>
+<div class="row">
+    <div class="col-3">
+        <div class="card card-box" style="width: 20rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <i class="fas fa-3x fa-tshirt"></i>
+                    </div>
+                    <div class="offset-2 col-7" style="text-align: center;">
+                        <h1 id="shirts-total"></h1>
+                    </div>
+                </div>
+                <div class="row mt-4" >
+                    <div class="offset-2 col-4">
+                        <p id="size-s"></p>
+                        <p id="size-m"></p>
+                        <p id="size-l"></p>
+                    </div>
+                    <div class="col-4">
+                        <p id="size-xl"></p>
+                        <p id="size-xxl"></p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-3">
-            <p style="text-align: center">GDPR Acceptance</p>
-            <div class = "table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table table-striped" id="gdprList">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th>Name</th>
-                            <th>GDPR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-2">
-            <p style="text-align: center">Shirts</p>
-            <div class = "table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table table-striped" id="shirtsList">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th>Size</th>
-                            <th>Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+          </div>
     </div>
+    <div class="offset-1 col-3">
+        <div class="card card-box" style="width: 20rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <i class="fas fa-3x fa-utensils"></i>
+                    </div>
+                    <div class="offset-2 col-7" style="text-align: center;">
+                        <h1 id="allergies-total"></h1>
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col">
+                        <div class = "table-wrapper-scroll-y allergies-scrollbar">
+                            <table class="table table-striped" id="allergies-list">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th>Allergies</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+<!-- 
+    <div class="offset-1 col-3">
+        <div class="card card-box" style="width: 20rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <i class="fab fa-4x fa-usb"></i>
+                    </div>
+                    <div class="offset-2 col-7" style="text-align: center;">
+                        <h1 id="people-total" style="padding-top: 0.8rem;"></h1>
+                    </div>
+                </div>
+                <div class="row mt-4" >
+                    <div class="offset-2 col-4">
+                        <p id="gender-m"></p>
+                        <p id="gender-f"></p>
+                        <p id="gender-o"></p>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div> -->
 </div>

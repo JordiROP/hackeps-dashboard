@@ -1,0 +1,8 @@
+.sidebar {
+    border-right: 1px solid #444444;
+    background-color: #333333!important;
+  }
+
+.sidebar-nav li .nav-link {
+color: whitesmoke;
+}
