@@ -54,16 +54,14 @@ function setShirtCard(users) {
 function setAllergiesTable(users) {
     var count = 0;
     users.forEach(user => {
-        console.log(user.food);
         if(user.food !== "") {
-            console.log(user.food);
             $("#allergies-list tbody").append(
                 `<tr>
                     <th scope=${count}>${count}</th>
                     <td>${user.food}</td>
                 </tr>`);
+                count++;
             }
-            count++;
         });
     document.getElementById("allergies-total").innerHTML = count.toString();
 }
@@ -89,7 +87,6 @@ function acceptUser(userId) {
     document.getElementById(userId + "-accepted-col").innerHTML = "YES";
     document.getElementById(userId + "-accept").disabled = true
     document.getElementById(userId + "-deny").disabled = false
-    console.log(userId);
 }
 
 function denyUser(userId) {
