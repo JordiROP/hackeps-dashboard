@@ -1,13 +1,12 @@
+
 $(document).on('click', '#logginButton',function() {
-    console.log("HOLLA");
-    var email = "jordirop@hotmail.com";
-    var password = "Marruecos1234.";
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-      });
+
+    // HOLA CODE REVIWERS QUE TAL COMO VA TODOOOOO!
+    // NO HAGAIS MUCHO CASO POR AQUI QUE ESTO ES UNA MIERDA
+    // MIMITOS Y BESIS PA TODOS <3
+    var email = document.getElementsByName("email")[0].value;
+    var password = document.getElementsByName("password")[0].value;
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {});
     return false;
 });
 

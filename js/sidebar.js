@@ -8,6 +8,6 @@ $(document).on('click', '#usersLink',function() {
 $(document).on('click', '#teamsLink', function() {
     $("div").remove("#users");
     $("#main").append("<div id='teams'></div>");
-    $("#teams").load("../html/teams.html",teamStats);
+    $("#teams").load("../html/teams.html", teamStats);
     return false;
 });
