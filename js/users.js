@@ -1,11 +1,16 @@
 function userStats() {
-    var db = firebase.firestore();
-    db.collection("hackeps-2019/dev/users").get().then(querySnapshot => {
-        var users = querySnapshot.docs.map(doc => doc.data());
-        setUsersTable(users);
-        setShirtCard(users);
-        setAllergiesTable(users);
-    });
+    const users_url = 'https://hackeps-dashboard.herokuapp.com/users';
+    $.ajax({
+        url: users_url,
+        type: "GET",
+        headers: {'token': getCookie('token')}
+      }).done(function(data, status) {
+          setUsersTable(data.users);
+          setShirtCard(data.users);
+          setAllergiesTable(data.users);
+      }).fail(function(cause){
+        console.log(cause)
+      });
 }
 
 function setUsersTable(users) {
@@ -13,17 +18,17 @@ function setUsersTable(users) {
         $("#usersList tbody").append(
             `<tr>
                 <th scope=${user.uid}>${user.uid}</th>
-                <td>${user.fullName}</td>
-                <td>${user.birthDate}</td>
-                <td>${user.food}</td>
-                <td>${user.shirtSize}</td>
+                <td>${user.full_name}</td>
+                <td>${user.birthday}</td>
+                <td>${user.allergies}</td>
+                <td>${user.shirt_size}</td>
                 <td>${user.gdpr}</td>
                 <td>${user.terms}</td>
-                <td id="${user.uid}-accepted-col">${user.accepted}</td>
+                <td id="${user.uid}-accepted-col">${user.status}</td>
                 <td><button id="${user.uid}-accept" type="button" class="btn ok-btn" onclick="acceptUser(\'${user.uid}\');">Accept</button></td>
                 <td><button id="${user.uid}-deny" type="button" class="btn ko-btn" onclick="denyUser(\'${user.uid}\');">Deny</button></td>
             </tr>`);
-            if (user.accepted === "YES") {
+            if (user.status === "YES") {
                 document.getElementById(user.uid + "-accept").disabled = true;
             } else {
                 document.getElementById(user.uid + "-deny").disabled = true;
@@ -40,7 +45,7 @@ function setShirtCard(users) {
     shirts.set('XL', 0);
     shirts.set('XXL', 0);
     users.forEach(user => {
-        shirts.set(user.shirtSize, shirts.get(user.shirtSize)+1);
+        shirts.set(user.shirt_size, shirts.get(user.shirt_size)+1);
         count++;
     });
     document.getElementById("shirts-total").innerHTML = count.toString();
@@ -54,11 +59,11 @@ function setShirtCard(users) {
 function setAllergiesTable(users) {
     var count = 0;
     users.forEach(user => {
-        if(user.food !== "") {
+        if(user.allergies !== "") {
             $("#allergies-list tbody").append(
                 `<tr>
                     <th scope=${count}>${count}</th>
-                    <td>${user.food}</td>
+                    <td>${user.allergies}</td>
                 </tr>`);
                 count++;
             }
@@ -81,20 +86,49 @@ function setGenderCard(users) {
 }
 
 function acceptUser(userId) {
-    db.collection("hackeps-2019/dev/users").doc(userId).update({
-        "accepted": "YES"
-    });
-    document.getElementById(userId + "-accepted-col").innerHTML = "YES";
-    document.getElementById(userId + "-accept").disabled = true
-    document.getElementById(userId + "-deny").disabled = false
+    const update_url = 'https://hackeps-dashboard.herokuapp.com/users/update/' + userId
+    $.ajax({
+        url: update_url,
+        type: "POST",
+        headers: {'token': getCookie('token')},
+        data:{'status': 'YES'}
+      }).done(function(data, status) {
+        document.getElementById(userId + "-accepted-col").innerHTML = "YES";
+        document.getElementById(userId + "-accept").disabled = true
+        document.getElementById(userId + "-deny").disabled = false
+      }).fail(function(cause){
+        console.log(cause)
+      });
 }
 
 function denyUser(userId) {
-    db.collection("hackeps-2019/dev/users").doc(userId).update({
-        "accepted": "NO"
-    });
-    document.getElementById(userId + "-accepted-col").innerHTML = "NO";
-    document.getElementById(userId + "-accept").disabled = false
-    document.getElementById(userId + "-deny").disabled = true
+    const update_url = 'https://hackeps-dashboard.herokuapp.com/users/update/' + userId
+    $.ajax({
+        url: update_url,
+        type: "POST",
+        headers: {'token': getCookie('token')},
+        data:{'status': 'NO'}
+      }).done(function(data, status) {
+        document.getElementById(userId + "-accepted-col").innerHTML = "NO";
+        document.getElementById(userId + "-accept").disabled = false
+        document.getElementById(userId + "-deny").disabled = true
+      }).fail(function(cause){
+        console.log(cause)
+      });
 }
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }

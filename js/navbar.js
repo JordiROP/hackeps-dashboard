@@ -1,14 +1,11 @@
 $(document).on('click', '#logout', function() {
-    firebase.auth().signOut().then(function() {
-        $("div").remove("#users");
-        $("div").remove("#navbar");
-        $("div").remove("#sidebars");
-        $("div").remove(".container-fluid");
-        $("body").append("<div id='login'></div>");
-        $("#login").load("../html/login.html",);
-      }).catch(function(error) {
-        // An error happened.
-      });
-    
-    return false;
+  document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  document.cookie = "refresh_token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  $("div").remove("#users");
+  $("div").remove("#navbar");
+  $("div").remove("#sidebars");
+  $("div").remove(".container-fluid");
+  $("body").append("<div id='login'></div>");
+  $("#login").load("../html/login.html",);    
+  return false;
 });
