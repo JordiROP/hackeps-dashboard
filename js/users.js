@@ -1,17 +1,18 @@
+
 function userStats() {
     const users_url = 'https://hackeps-dashboard.herokuapp.com/users';
-    $.ajax({
-        url: users_url,
-        type: "GET",
-        headers: {'token': getCookie('token')}
-      }).done(function(data, status) {
-          setUsersTable(data.users);
-          setUsersCard(data.users);
-        //   setShirtCard(data.users);
-          setAllergiesTable(data.users);
-      }).fail(function(cause){
-        console.log(cause)
-      });
+      $.ajax({
+          url: users_url,
+          type: "GET",
+          headers: {'token': getCookie('token')}
+        }).done(function(data, status) {
+            setUsersTable(data.users);
+            setUsersCard(data.users);
+          //   setShirtCard(data.users);
+            setAllergiesTable(data.users);
+        }).fail(function(cause){
+          console.log(cause)
+        });
 }
 
 function setUsersTable(users) {
@@ -99,10 +100,10 @@ function setUsersCard(users) {
     }
   });
   var total = accepted + denied + waiting;
-  document.getElementById("people-total").innerHTML = "Total: " + total.toString();
-  document.getElementById("accepted").innerHTML = "Accepted: " + accepted.toString();
-  document.getElementById("denied").innerHTML = "Denied: " + denied.toString();
-  document.getElementById("waiting").innerHTML = "Waiting: " + waiting.toString();
+  document.getElementById("people-total").innerHTML = total.toString();
+  document.getElementById("accepted").innerHTML = '<i class="fas fa-check fa-3x"></i> \t' + accepted.toString();
+  document.getElementById("denied").innerHTML = '<i class="fas fa-ban fa-3x"></i> \t' + denied.toString();
+  document.getElementById("waiting").innerHTML = '<i class="fas fa-spinner fa-3x"></i> \t' + waiting.toString();
 }
 
 function acceptUser(userId) {
@@ -136,6 +137,7 @@ function denyUser(userId) {
         console.log(cause)
       });
 }
+
 
 function getCookie(cname) {
     var name = cname + "=";
