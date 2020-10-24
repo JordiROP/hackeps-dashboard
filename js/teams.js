@@ -39,9 +39,11 @@ async function setDetailTeams(teams) {
             team_row = team_row.concat(`<div class="row mt-3">`);
         }
         for(const member of team.members) {
+            console.log(member);
             if(member !== undefined) {
-                var photo = member.photoURL !== null ? member.photo_url : "assets/no-user.png";
-                var name = member.full_name;
+
+                var photo = member.photo_url === null ? "assets/no-user.png": member.photo_url;
+                var name = member.full_name.length <= 20 ? member.full_name : member.full_name.substring(0,17) + '...';
                 
                 var col = `<div class="col-6">
                     <div class="row justify-content-center">
