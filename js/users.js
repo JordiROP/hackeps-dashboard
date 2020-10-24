@@ -6,7 +6,8 @@ function userStats() {
         headers: {'token': getCookie('token')}
       }).done(function(data, status) {
           setUsersTable(data.users);
-          setShirtCard(data.users);
+          setUsersCard(data.users);
+        //   setShirtCard(data.users);
           setAllergiesTable(data.users);
       }).fail(function(cause){
         console.log(cause)
@@ -21,7 +22,6 @@ function setUsersTable(users) {
                 <td>${user.full_name}</td>
                 <td>${user.birthday}</td>
                 <td>${user.allergies}</td>
-                <td>${user.shirt_size}</td>
                 <td>${user.gdpr}</td>
                 <td>${user.terms}</td>
                 <td id="${user.uid}-accepted-col">${user.status}</td>
@@ -83,6 +83,26 @@ function setGenderCard(users) {
     document.getElementById("gender-m").innerHTML = "Male: " + shirts.get("M").toString();
     document.getElementById("gender-f").innerHTML = "Female: " + shirts.get("F").toString();
     document.getElementById("gender-").innerHTML = "Other: " + shirts.get("O").toString();
+}
+
+function setUsersCard(users) {
+  var accepted = 0;
+  var denied = 0;
+  var waiting = 0;
+  users.forEach(user => {
+    if (user.status === "YES") {
+      accepted += 1;
+    } else if(user.status === "NO") {
+      denied += 1;
+    } else {
+      waiting += 1;
+    }
+  });
+  var total = accepted + denied + waiting;
+  document.getElementById("people-total").innerHTML = "Total: " + total.toString();
+  document.getElementById("accepted").innerHTML = "Accepted: " + accepted.toString();
+  document.getElementById("denied").innerHTML = "Denied: " + denied.toString();
+  document.getElementById("waiting").innerHTML = "Waiting: " + waiting.toString();
 }
 
 function acceptUser(userId) {

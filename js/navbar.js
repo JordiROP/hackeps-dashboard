@@ -1,6 +1,9 @@
 $(document).on('click', '#logout', function() {
   document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
   document.cookie = "refresh_token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  document.cookie = "refresh_token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  document.cookie = "users_data=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  document.cookie = "teams_data=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
   $("div").remove("#users");
   $("div").remove("#navbar");
   $("div").remove("#sidebars");

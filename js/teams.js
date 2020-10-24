@@ -1,17 +1,15 @@
-async function getTeamUsers(team) {
-    var db = firebase.firestore();
-    const usersPromises = team.members.map(u => db.doc('hackeps-2019/prod/' + u.path).get());
-    const users = await Promise.all(usersPromises);
-
-    return users.map(u => u.data());
-}
-
 async function teamStats() {
-    var db = firebase.firestore();
-    const teamsSnapshot = await db.collection("hackeps-2019/prod/teams").get();
-    const teams = teamsSnapshot.docs.map(doc => doc.data());
-    setTotalTeams(teams);
-    setDetailTeams(teams);
+    const users_url = 'https://hackeps-dashboard.herokuapp.com/teams';
+    $.ajax({
+        url: users_url,
+        type: "GET",
+        headers: {'token': getCookie('token')}
+      }).done(function(data, status) {
+        setTotalTeams(data.teams);
+        setDetailTeams(data.teams);
+      }).fail(function(cause){
+        console.log(cause)
+      });
 }
 
 function setTotalTeams(teams) {
@@ -34,17 +32,16 @@ async function setDetailTeams(teams) {
     var team_row = "";
     team_row = team_row.concat(`<div class="row mt-3">`);
     for(const team of teams) {
-        var users = await getTeamUsers(team);
         count = 0;
         var row="";
         if(teamsCount%3 === 0 && teamsCount !== 0) {
             team_row = team_row.concat(`</div>`);
             team_row = team_row.concat(`<div class="row mt-3">`);
         }
-        for(const user of users) {
-            if(user !== undefined) {
-                var photo = user.photoURL !== null ? user.photoURL : "assets/no-user.png";
-                var name = user.fullName;
+        for(const member of team.members) {
+            if(member !== undefined) {
+                var photo = member.photoURL !== null ? member.photo_url : "assets/no-user.png";
+                var name = member.full_name;
                 
                 var col = `<div class="col-6">
                     <div class="row justify-content-center">
@@ -58,7 +55,7 @@ async function setDetailTeams(teams) {
                 if (count === 0  || count === 2 ) {
                     row = row.concat(`<div class="row justify-content-center">`);
                     row = row.concat(col);
-                    if(count === users.length-1) {
+                    if(count === team.members.length-1) {
                         row = row.concat(`</div>`);
                     }
                 } else if(count === 1 || count === 3) {
@@ -67,7 +64,7 @@ async function setDetailTeams(teams) {
                 };
                 count++;
             }else {
-                if(count === users.length-1) {
+                if(count === team.members.length-1) {
                     row = row.concat(`</div>`);
                 }
                 count++;
@@ -97,12 +94,11 @@ async function showTeams(teams) {
     var count = 0;
     var membersWTeam = 0;
     for (const team of teams) {
-        const members = await getTeamUsers(team);
         $("#teamsList tbody").append(
             `<tr>
                 <th scope=${count}>${count}</th>
                 <td>${team.name}</td>
-                <td>${members.map(m => m.nickname).join(", ")}</td>
+                <td>${team.members.map(m => m.full_name).join(", ")}</td>
                 <td>${team.members.length}/4</td>
             </tr>`);
         count++;
