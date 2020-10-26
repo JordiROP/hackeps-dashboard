@@ -31,8 +31,11 @@ function setUsersTable(users) {
             </tr>`);
             if (user.status === "YES") {
                 document.getElementById(user.uid + "-accept").disabled = true;
-            } else {
+            } else if (user.status === "NO") {
                 document.getElementById(user.uid + "-deny").disabled = true;
+            } else {
+                document.getElementById(user.uid + "-accept").disabled = false;
+                document.getElementById(user.uid + "-deny").disabled = false;
             }
         });
 }
