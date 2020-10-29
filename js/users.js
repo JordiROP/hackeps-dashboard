@@ -1,18 +1,19 @@
-
+const users_url = 'https://hackeps-dashboard.herokuapp.com/users';
 function userStats() {
-    const users_url = 'https://hackeps-dashboard.herokuapp.com/users';
-      $.ajax({
-          url: users_url,
-          type: "GET",
-          headers: {'token': getCookie('token')}
-        }).done(function(data, status) {
-            setUsersTable(data.users);
-            setUsersCard(data.users);
-          //   setShirtCard(data.users);
-            setAllergiesTable(data.users);
-        }).fail(function(cause){
-          console.log(cause)
-        });
+    var token = getCookie('token');
+    var refresh_token = getCookie('refresh_token');
+    if (token === "" && refresh_token !== "") {
+      refreshToken(refresh_token).then(function(response) {
+        setCookie('token', response.user.idToken, 3600*1000);
+        usersRequest(users_url, response.user.idToken);
+      }).catch(function(error) {
+        console.log(error);
+    });
+    } else if(token === "" && refresh_token === "") {
+      toLogin();
+    } else {
+      usersRequest(token);
+    }
 }
 
 function setUsersTable(users) {
@@ -141,19 +142,27 @@ function denyUser(userId) {
       });
 }
 
+function usersRequest(token) {
+    $.ajax({
+        url: users_url,
+        type: "GET",
+        headers: {'token': token}
+    }).done(function(data, status) {
+      setUsersTable(data.users);
+      setUsersCard(data.users);
+    //   setShirtCard(data.users);
+      setAllergiesTable(data.users);
+    }).fail(function(cause){
+        console.log(cause)
+    });
+}
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
+function toLogin() {
+    document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.cookie = "refresh_token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    $("div").remove("#navbar");
+    $("div").remove("#sidebars");
+    $("div").remove(".container-fluid");
+    $("body").append("<div id='login'></div>");
+    $("#login").load("../html/login.html",);
+}
