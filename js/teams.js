@@ -1,15 +1,20 @@
-async function teamStats() {
-    const users_url = 'https://hackeps-dashboard.herokuapp.com/teams';
-    $.ajax({
-        url: users_url,
-        type: "GET",
-        headers: {'token': getCookie('token')}
-      }).done(function(data, status) {
-        setTotalTeams(data.teams);
-        setDetailTeams(data.teams);
-      }).fail(function(cause){
-        console.log(cause)
-      });
+const teams_url = 'https://hackeps-dashboard.herokuapp.com/teams';
+
+function teamStats() {
+    var token = getCookie('token');
+    var refresh_token = getCookie('refresh_token');
+    if (token === "" && refresh_token !== "") {
+        refreshToken(refresh_token).then(function(response) {
+            setCookie('token', response.user.idToken, 3600*1000);
+            teamsRequest(response.user.idToken);
+        }).catch(function(error) {
+            console.log(error);
+        });
+    } else if (token === "" && refresh_token === "") {
+        toLogin();
+    } else {
+        teamsRequest(token);
+    }
 }
 
 function setTotalTeams(teams) {
@@ -119,4 +124,27 @@ async function showTeams(teams) {
             <td>Members w/ Team</td>
             <td>${membersWTeam}</td>
         </tr>`);
+}
+
+function teamsRequest(token) {
+    $.ajax({
+        url: teams_url,
+        type: "GET",
+        headers: {'token': token}
+    }).done(function(data, status) {
+        setTotalTeams(data.teams);
+        setDetailTeams(data.teams);
+    }).fail(function(cause){
+        console.log(cause)
+    });
+}
+
+function toLogin() {
+    document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.cookie = "refresh_token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    $("div").remove("#navbar");
+    $("div").remove("#sidebars");
+    $("div").remove(".container-fluid");
+    $("body").append("<div id='login'></div>");
+    $("#login").load("../html/login.html",);
 }
